@@ -82,14 +82,62 @@ int* spiralOrder(const int** A, int n11, int n12, int *length_of_array) {
 	 *length_of_array = n11 * n12; // length of result array
 	 int *result = (int *) malloc(*length_of_array * sizeof(int));
 	 // DO STUFF HERE
-	 int i;
-	 int **visited = (int **)malloc((n11) * sizeof(int *));
-     for (i = 0; i < n11; i++) {
-        visited[i] = (int *)malloc((n12) * sizeof(int));
-     }
+	 //int i;
+	 //int **visited = (int **)malloc((n11) * sizeof(int *));
+     //for (i = 0; i < n11; i++) {
+        //visited[i] = (int *)malloc((n12) * sizeof(int));
+     //}
      
 
-     recursivePrint(A, n11, n12, result, 0);
+     //recursivePrint(A, n11, n12, result, 0);
      
+     int t=0,b=n11-1,l=0,r=n12-1,i,count=0,j=0;
+	 while ( t<=b && l<=r )
+	 {
+	     if ( count%4==0 && l<=r)
+	     {
+	         for (i=l;i<=r;i++)
+	         {
+	             //printf("%d, ",A[t][i]);
+	             result[j]=A[t][i];
+	             j++;
+	         }
+	         // chop off the top row
+	         t++;
+	     }
+	     else if ( count%4==1 && t<=b)
+	     {
+	         for (i=t;i<=b;i++)
+	         {
+	             //printf("%d, ",A[i][r]);
+	             result[j]=A[i][r];
+	             j++;
+	         }
+	         r--;
+	     }
+	     else if ( count%4==2 && l<=r )
+	     {
+	         for ( i=r;i>=l;i--)
+	         {
+	             
+	             result[j]=A[b][i];
+	             j++;
+	         }
+	         b--;
+	     }
+	     else  
+	     //( count%4==3 && t<=b )
+	     {
+	         for (i=b;i>=t;i--)
+	         {
+	             //printf("%d, ",A[i][l])
+	             result[j]=A[i][l];
+	             j++;
+	         }
+	         l++;
+	     }
+
+	     count++;
+	 }
 	 return result;
 }
