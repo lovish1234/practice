@@ -23,6 +23,7 @@ void Merge( int *array, int begin, int mid, int end)
 		while(j<(end-mid+1))
 		{
 			result[k]=array[j];
+			j++;k++;
 		}
 	}
 	if(j==(end-mid)+1)
@@ -30,6 +31,7 @@ void Merge( int *array, int begin, int mid, int end)
 		while(i< ((mid-1)-begin+1) )
 		{
 			result[k]=array[i];
+			i++;k++;
 		}
 	}
 
@@ -47,11 +49,15 @@ void Merge( int *array, int begin, int mid, int end)
 
 void MergeSort( int *array, int begin, int end)
 {
-	if ( begin<= end + 1)
+	printf("%d %d\n",begin,end);
+    
+//	printf("test");
+	if (((end-begin) + 1) < 2 )
 	{
 		return;
 	}
 	int mid = begin + (( end - begin )/2);
+//    printf("test");
 
 	MergeSort(array, begin, mid -1);
 	MergeSort(array, mid, end);
@@ -68,11 +74,12 @@ void main()
 	int j,array[i];
 	for(j=0;j<i;j++)
 	{
-		scanf("%d ",&array[j]);
+		scanf("%d",&array[j]);
 	}
-    printf("\n");
 
-	MergeSort(array, 0, i);
+    printf("%d\n",i);
+   
+	MergeSort(array, 0, (i-1));
     
 	for(j=0;j<i; j++)
 	{
