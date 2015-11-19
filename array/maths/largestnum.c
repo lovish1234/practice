@@ -91,6 +91,20 @@ int compareFunction(const void* a, const void* b)
         return 0;
 }
 
+int nullArray(int *A, int n1)
+{
+    int i;
+    for(i=0;i<n1;i++)
+    {
+        if(A[i]!=0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
 int main()
 {
     const int A[]={450,56,10,2,23,20,21,0}; 
@@ -104,7 +118,12 @@ int main()
 	{
 		B[i]=A[i];
 	}
-
+	
+    if(nullArray(B,n1))
+    {
+        char *C = "0\0";
+        return C;
+    }
     qsort(B, n1, sizeof(int), compareFunction);
 //	qsort(B, n1, sizeof(int),compareFuntion);
 	
