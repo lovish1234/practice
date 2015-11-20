@@ -90,7 +90,11 @@ int* plusOne(int* A, int n1, int *length_of_array) {
         //printf("%d ",B[i]);
     }
     
-   
+    // Malloc allocates more memory than required. Hence, need to reset the length of array 
+    // Hence fill the result in *length_of_array space. 
+    *length_of_array = finalLength;
+    
+    
     return B;
          
          
