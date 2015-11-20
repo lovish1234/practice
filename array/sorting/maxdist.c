@@ -6,7 +6,7 @@
  */
 int maximumGap(const int* A, int n1) {
     
-    int i,j,k,maxValue=0;
+    int i=0,j=n1-1,k,maxValue=0;
     int *B=(int*)malloc(sizeof(int)*n1);
     
     for(i=0;i<n1;i++)
@@ -14,19 +14,46 @@ int maximumGap(const int* A, int n1) {
         B[i]=A[i];
     }
     
-    for(i=0;i<n1-1;i++)
+    int Rmax[n1];
+    // construct an array with element representing maximum to the right side of that element.
+    for(i=n1-1;i>=0;i--)
     {
-        for(j=i;j<n1;j++)
+        if(i==n1-1)
         {
-            if(A[j]>=A[i])
-            {
-               k=j-i;
-               if(maxValue < k)
-               {
-                   maxValue = k;
-               }
-            }
+            Rmax[i]=B[i];
+        }
+        else
+        {
+        if(B[i]>=Rmax[i+1])
+        {
+            Rmax[i]=B[i];
+        }
+        else
+        {
+            Rmax[i]=Rmax[i+1];
+        }
         }
     }
+    
+
+    
+    for(i=0,j=0;i<n1 && j<n1;)
+    {
+        //printf("%d %d",B[i], Rmax[j]);
+        if(B[i]<=Rmax[j])
+        {
+            if((j-i)>maxValue)
+            {
+                maxValue=(j-i);
+                //printf("%d ",maxValue);
+            }
+            j++;
+        }
+        else
+        {
+            i++;
+        }
+    }
+    
     return maxValue;
 }
