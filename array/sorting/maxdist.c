@@ -16,26 +16,8 @@ int maximumGap(const int* A, int n1) {
     
     int Rmax[n1];
     // construct an array with element representing maximum to the right side of that element.
-    for(i=n1-1;i>=0;i--)
-    {
-        if(i==n1-1)
-        {
-            Rmax[i]=B[i];
-        }
-        else
-        {
-        if(B[i]>=Rmax[i+1])
-        {
-            Rmax[i]=B[i];
-        }
-        else
-        {
-            Rmax[i]=Rmax[i+1];
-        }
-        }
-    }
-    
-
+ 
+    for(i=n1-1;i>=0;i--) Rmax[i]=(i==n1-1||B[i]>=Rmax[i+1]?B[i]:Rmax[i+1]);
     
     for(i=0,j=0;i<n1 && j<n1;)
     {
