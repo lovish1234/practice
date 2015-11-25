@@ -7,7 +7,7 @@
  */
 int ** diagonal(int** A, int n11, int n12, int *len1) {
     
-    *len1 = n11;
+    *len1 = 2*n11-1;
     int i,j,sum,count,size=1;
 
     
@@ -46,3 +46,6 @@ int ** diagonal(int** A, int n11, int n12, int *len1) {
     
     return result;
 }
+
+
+
