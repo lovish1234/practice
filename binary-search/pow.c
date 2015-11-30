@@ -25,19 +25,41 @@ int positive( int x, int d)
     }
     return x;
 }
+
+
 int powmod(int x, int n, int d) {
+    
+    
     
     if(d==1)
     {
         return 0;
     }
-    int ans;
-    if(x<0)
-    {
-        x=positive(x,d);
-    }
+    int ans=1;
+    long long int mult1=0;
     
-    ans = (power(x,n)%d);
+    x=positive(x,d);
+    x = x%d;
+    long long int mult2=x*x;
+    //printf("%d %lli\n",x,mult2);
+
+
+
+    while (n>0)
+    {
+        if(n%2==1)
+        {
+            mult1=ans*x;
+            ans = (mult1)%d;
+        }
+        n=n>>1;
+        mult2=(x*x);
+        //printf("%d %d %d %lli %lli\n",ans,x,n,mult1,mult2);
+        x=(mult2)%d;
+        
+    }
+
+
+    
     return ans;
 }
-
