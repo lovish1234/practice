@@ -35,12 +35,12 @@ int powmod(int x, int n, int d) {
     {
         return 0;
     }
-    int ans=1;
-    long long int mult1=0;
+    long long int ans=1;
+    //long long int mult1=0;
     
     x=positive(x,d);
     x = x%d;
-    long long int mult2=x*x;
+    long long int mult2=x;
     //printf("%d %lli\n",x,mult2);
 
 
@@ -49,17 +49,18 @@ int powmod(int x, int n, int d) {
     {
         if(n%2==1)
         {
-            mult1=ans*x;
-            ans = (mult1)%d;
+            //mult1=ans*x;
+            ans = (ans*mult2)%d;
         }
         n=n>>1;
-        mult2=(x*x);
+        mult2=(mult2*mult2)%d;
         //printf("%d %d %d %lli %lli\n",ans,x,n,mult1,mult2);
-        x=(mult2)%d;
+        //x=(mult2)%d;
         
     }
 
 
     
-    return ans;
+    return (int) (ans%d);
+    
 }
