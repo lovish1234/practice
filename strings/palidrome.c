@@ -7,7 +7,8 @@
  
 int strLen( char* A)
 {
-    char *itr = A,count=0;
+    char *itr = A;
+    int count=0;
     while(*itr!='\0')
     {
         itr++;
@@ -18,15 +19,12 @@ int strLen( char* A)
 
 int finalstrLen( char* A)
 {
-    char *itr = A,count=0;
-    int ascii;
-    char a='a', b='z', c='A', d='Z', e='0', f='9';
+    char *itr = A;
+    int count=0;
     
     while(*itr!='\0')
     {
-        ascii=(int)*itr;
-        //printf("%c %d\n", *itr, ascii);
-        if( (ascii>=(int)a && ascii<=(int)b) || (ascii>=(int)c && ascii<=(int)d) || (ascii>=(int)e && ascii <=(int)f))
+        if( (*itr>='A' && *itr<='Z') || (*itr>='a' && *itr<='z') || (*itr>='0' && *itr<='9') )
         {
             count++;
            
@@ -52,14 +50,12 @@ char *removeAlphaNumeric(char *A, int finalstrLength)
              // if it is uppercase
             if(*itr>='A' && *itr<='Z')
             {
-                *resultItr = *itr-'A'+'a';
+                *resultItr = (*itr)-'A'+'a';
             }
             else
             {
                 *resultItr = *itr;
             }
-            
-            //printf("%c %c\n",*itr, *resultItr);
             resultItr++;
          }
          
@@ -77,24 +73,15 @@ int isPalindrome(char* A) {
     
     int finallenA = finalstrLen(A);
     if(finallenA==1 || finallenA==2)return 1;
-    //printf("%d %d\n",lenA,finallenA);
-    
     
     char *final = removeAlphaNumeric(A, finallenA);
     
-    /*
-    for(i=0;i<finallenA;i++)
-    {
-        printf("%c",final[i]);
-    }
-    */
     
-    
-    for(i=0;i<(finallenA-1);i++)
+    for(i=0;i<((finallenA-1)/2)+1;i++)
     {
-        //printf("%c %c",final[i],final[finallenA-i-2]);
         if(!(final[i]==final[finallenA-i-2]))
         {
+            
             return 0;
         
         }
@@ -104,3 +91,4 @@ int isPalindrome(char* A) {
     return 1;
     
 }
+
