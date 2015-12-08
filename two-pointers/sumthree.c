@@ -24,7 +24,7 @@ int comparator (const void* a, const void* b)
 int threeSumClosest(int* A, int n1, int B) {
     //suppose the array is sorted
     qsort(A,n1,sizeof(int),comparator);
-    int sum=0;
+    
     
     // if array consists or 3 numbers or target is less than every element in array
     if(n1==3 || B<A[0])
@@ -38,56 +38,41 @@ int threeSumClosest(int* A, int n1, int B) {
         return (A[n1-1]+A[n1-2]+A[n1-3]);
     }
   
-    int i,j,k;
-    int iprev=0, jprev=n1-1, kprev=0,sumprev=A[0]+A[1]+A[n1-1], answer;
+    int i,j,k,sum=0;
+    int  answer= A[n1-3]+A[n1-2]+A[n1-1] ;
+    int min =INT_MAX;
     // sum is increasing inside these two loops
     for(i=0;i<n1;i++)
     {
         j=n1-1;
-        for(k=i+1;k<n1;k++)
+        k=i+1;
+        while( j>k )
         {
             
             // sum is decreasing inside this loop
-            for(;j>k;j--)
-            {
-                if(i!=j && j!=k && k!=i )
-                {
-                    sum = A[i]+A[j]+A[k];
-                    //printf("%d\n",sum);
-                    // if sum is exactly equal to target return sum
-                    if(sum==B)
-                    {
-                        return sum;
-                    }
+            
+            sum = A[i]+A[j]+A[k];
                     
+                    // if sum is exactly equal to target return sum
+            if(sum==B) return sum;
+            //printf("%d\n",sum);        
                     // when the sum reaches the point where it is less than B 
                     // compare the sum from previous value and break the loop
-                    if(sum < B)
-                    {
-                        if( abs(B-sum) < abs(sumprev-B)  )
-                        {
-                            answer = sum;
-                           // printf("%d %d\n",answer,sum);
-                        }
-                        else
-                        {
-                            answer = sumprev;
-                        }
-                        sumprev = sum;
-                        break;
-                    }
-                        
-                    
-                    sumprev = sum;
-                    
-                    
-                }
-                
-                //jprev=j;
+                    //printf("%d\n", sum);
+            //printf("%d %d %d %d\n",i,j,k,sum);
+            if (abs(B-sum)<min)
+            {
+
+                answer=sum;
+                min=abs(B-sum);
+
             }
-            //kprev=k;
+            //answer = (abs(answer) < abs(B-sum)) ? answer : sum;
+            if(sum < B) k++;
+            if(sum > B) j--;
+          
+           
         }
-        //iprev=i;
     }
     return answer;
 }
