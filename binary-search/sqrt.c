@@ -34,33 +34,54 @@
      return sum;
  }
  
+ int findSeed(int A)
+ {
+     int count=0;
+     while(A/100)
+     {
+         count+=1;
+         A/=100;
+     }
+     
+     if(A>10)
+     {
+         return 6*pow(10,count);
+     }
+     else
+     {
+         return 2*pow(10,count);
+     }
+     
+ }
  
 int Sqrt(int A) {
     if(A==0)
     {
         return 0;
     }
-    int low=1, high=A, mid;
-    long long int temp;
     
+    if(A==3)
+    {
+        return 1;
+    }
+    double limit1=findSeed(A), limit2=A/limit1;
+    int count=0;
+    double low=limit1>limit2?limit2:limit1;
+    double high=limit1>limit2?limit1:limit2;
+    double prevmid = low + (high-low)/2, mid=0.0, temp;
+    int prevmidint = (int)prevmid, midint = (int)mid;
+    
+    //printf("%d %d %d \n", low, high, prevmid);
     // try to find a good seed value ( initial estimation ) of square root
     
-    while(low<=high)
+    
+    while((int)midint!=(int)prevmidint)
     {
-        mid=low+(high-low)/2;
-        temp = mid*mid;
-        if(temp < A && (temp + 2*mid + 1) > A)
-        {
-            return mid;
-        }
-        else if( temp >= A)
-        {
-            high = mid-1;
-        }
-        else
-        {
-            low = mid+1;
-        }
+       mid=(prevmid+(A/prevmid))/2;
+       prevmid=(mid+(A/mid))/2;
+       prevmidint = (int)prevmid;
+       midint = (int)mid;
     }
+    
+    return midint;
 }
-
