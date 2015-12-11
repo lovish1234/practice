@@ -17,6 +17,7 @@ int diffPossible(int* A, int n1, int B) {
     
     //a linear scan to find out pair of concecutive elements with minimum difference
     
+    /*
     for(i=0;i<(n1-1);i++)
     {
         j=i+1;
@@ -26,7 +27,9 @@ int diffPossible(int* A, int n1, int B) {
             minDiff=(A[j]-A[i]);
         }
     }
+    */
     
+    /*
     if(A[minIndex+1]-A[minIndex]>B)
     {
         return 0;
@@ -50,5 +53,26 @@ int diffPossible(int* A, int n1, int B) {
             i--;
         }
     }
-    return 0;
+    */
+    
+    // a new array with 
+   i=0;
+   j=1;
+   while((i<n1) && (j<n1))
+   {
+       if(i!=j && A[j]-A[i]==B)
+       {
+           return 1;
+       }
+       if(A[j]-A[i]<B)
+       {
+           j++;
+           
+       }
+       else
+       {
+           i++;
+       }
+   }
+   return 0;
 }
