@@ -6,7 +6,7 @@
  */
 int removeDuplicates(int* A, int n1) {
     
-    int i,j,dup=0,currentdup=0,offset=0;
+    int i,j,dup=0,currentdup=0;
     for(i=0;i<(n1-1);i++)
     {
         j=i+1;
@@ -17,29 +17,25 @@ int removeDuplicates(int* A, int n1) {
             //printf("%d \n",currentdup);
             if(currentdup==1)
             {
-                A[j-dup+offset]=A[j];
+                A[j-dup]=A[j];
                 dup--;
                 //printf("%d %d %d\n",j,dup,offset);
             }
-            if(currentdup==2)
-            {
-                dup++;
-                offset++;
-            }
+          
             dup++;
         }
         else
         {
             
             
-            A[j-dup+offset]=A[j];
+            A[j-dup]=A[j];
             
             currentdup=0;
            
         }
     }
     
-    for(i=0;i<(n1-dup+offset-1);i++)
+    for(i=0;i<(n1-dup-1);i++)
     {
         j=i+1;
         if(A[j]<A[i])
@@ -48,5 +44,5 @@ int removeDuplicates(int* A, int n1) {
         }
     }
     //printf("%d %d\n",dup,offset);
-    return (n1-dup+offset);
+    return (n1-dup);
 }
