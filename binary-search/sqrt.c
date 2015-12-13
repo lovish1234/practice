@@ -85,4 +85,3 @@ int Sqrt(int A) {
     
     return midint;
 }
-
