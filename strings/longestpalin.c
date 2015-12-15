@@ -35,27 +35,88 @@ char* longestPalindrome(char* A)
 {
     int start,end;
     int length=strLength(A);
-    int maxLength=INT_MIN,imax=-1,jmax=-1,i,j;
+    if(length==0 || length==1)
+    {
+        return A; 
+    }
+    int maxLength=INT_MIN,imax=-1,jmax=-1,i,j,diff;
     
-    //this does not look like O(n^2)
+    int palinMatrix[length][length];
+    
+    
+    
     for(i=0;i<length;i++)
     {
         for(j=i;j<length;j++)
         {
-            if(checkPalindrome(A,i,j)==1 && (j-i+1)>maxLength)
+            if(i==j)
             {
-                maxLength = (j-i+1);
-                imax=i;
-                jmax=j;
+                palinMatrix[i][j]=1;
+                if((j-i+1)>maxLength)
+                {
+                    imax=i;
+                    jmax=j;
+                    maxLength=(j-i+1);
+                }
             }
+            else if(j==i+1)
+            {
+                palinMatrix[i][j]=(A[i]==A[j]);
+                if(A[i]==A[j])
+                {
+                    if((j-i+1)>maxLength)
+                    {
+                        imax=i;
+                        jmax=j;
+                        maxLength=(j-i+1);
+                    }
+                }
+            }
+            else
+            {
+                palinMatrix[i][j]=0;
+            }
+            
         }
     }
+    
+    //printf("%d\n",length); 
+    for(diff=2;diff<length;diff++)
+    {
+        //printf("%d\n",length-diff);
+        for(i=0;i<length-diff;i++)
+        {
+                
+                j=i+diff;
+                if(palinMatrix[i+1][j-1]==1 && A[i]==A[j])
+                {
+                    palinMatrix[i][j]=1;
+                    if((j-i+1)>maxLength)
+                    {
+                        imax=i;
+                        jmax=j;
+                        maxLength=(j-i+1);
+                    }
+                }
+                else
+                {
+                    palinMatrix[i][j]=0;
+                }
+            
+            
+        }
+    }
+    
+    
+
     //printf("%d %d %d\n",imax,jmax,maxLength);
-    char* result= (char*)malloc(sizeof(char)*maxLength);
+    char* result= (char*)malloc(sizeof(char)*(maxLength+1));
     
     for(i=0;i<maxLength;i++)
     {
         result[i]=A[imax+i];
     }
+    result[i]='\0';
+    
     return result;
 }
