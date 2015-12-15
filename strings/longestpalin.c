@@ -35,50 +35,56 @@ char* longestPalindrome(char* A)
 {
     int start,end;
     int length=strLength(A);
-    if(length==0 || length==1)
+    if(length==0 )
     {
         return A; 
     }
-    int maxLength=INT_MIN,imax=-1,jmax=-1,i,j,diff;
+    int maxLength=1,imax=0,jmax=0,i,j,diff;
     
-    int palinMatrix[length][length];
-    
-    
+    int palinMatrix[length];
+    int baseMatrix[length];
     
     for(i=0;i<length;i++)
     {
-        for(j=i;j<length;j++)
+        baseMatrix[i]=1;
+        palinMatrix[i]=0;
+    }
+    
+    /*
+    for(i=0;i<length;i++)
+    {
+        printf("%d ",baseMatrix[i]);
+    }
+    printf("\n");
+    */
+    
+    
+    
+    // difference 1
+    for(diff=1;diff<2;diff++)
+    {
+        for(i=0;j<length-diff;i++)
         {
-            if(i==j)
+            j=i+diff;
+            palinMatrix[i]=(A[i]==A[j]);
+            
+            if( palinMatrix[i] && (j-i+1)>maxLength)
             {
-                palinMatrix[i][j]=1;
-                if((j-i+1)>maxLength)
-                {
-                    imax=i;
-                    jmax=j;
-                    maxLength=(j-i+1);
-                }
-            }
-            else if(j==i+1)
-            {
-                palinMatrix[i][j]=(A[i]==A[j]);
-                if(A[i]==A[j])
-                {
-                    if((j-i+1)>maxLength)
-                    {
-                        imax=i;
-                        jmax=j;
-                        maxLength=(j-i+1);
-                    }
-                }
-            }
-            else
-            {
-                palinMatrix[i][j]=0;
+                imax=i;
+                jmax=j;
+                maxLength=(j-i+1);
             }
             
         }
     }
+    
+    /*
+    for(i=0;i<length;i++)
+    {
+        printf("%d ",palinMatrix[i]);
+    }
+    printf("\n");
+    */
     
     //printf("%d\n",length); 
     for(diff=2;diff<length;diff++)
@@ -87,24 +93,53 @@ char* longestPalindrome(char* A)
         for(i=0;i<length-diff;i++)
         {
                 
-                j=i+diff;
-                if(palinMatrix[i+1][j-1]==1 && A[i]==A[j])
+            j=i+diff;
+            if(diff%2==0)
+            {
+                baseMatrix[i]=(baseMatrix[i+1] && (A[i]==A[j]));
+                if(baseMatrix[i] && (j-i+1)>maxLength)
                 {
-                    palinMatrix[i][j]=1;
-                    if((j-i+1)>maxLength)
-                    {
-                        imax=i;
-                        jmax=j;
-                        maxLength=(j-i+1);
-                    }
+                    imax=i;
+                    jmax=j;
+                    maxLength=(j-i+1);
+                    
                 }
-                else
+            }
+            else
+            {
+                palinMatrix[i]=(palinMatrix[i+1] && (A[i]==A[j]));
+                if(palinMatrix[i] && (j-i+1)>maxLength)
                 {
-                    palinMatrix[i][j]=0;
+                    imax=i;
+                    jmax=j;
+                    maxLength=(j-i+1);
+                    
                 }
+            }
             
             
         }
+        
+        
+        /*
+        if(diff%2==0)
+        {
+        for(i=0;i<length;i++)
+        {
+            printf("%d ",baseMatrix[i]);
+        }
+        printf("\n");
+        }
+        else
+        {
+        for(i=0;i<length;i++)
+        {
+           printf("%d ",palinMatrix[i]);
+        }
+        printf("\n");
+        }
+        */
+        
     }
     
     
