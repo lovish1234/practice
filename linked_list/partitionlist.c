@@ -20,70 +20,50 @@
  * 
  * @Output head pointer of list.
  */
- 
-int countS(listnode *A, int B)
-{
-    listnode* itrA=A;
-    int count=0;
+listnode* partition(listnode* A, int B) {
+    
+    
+    listnode *itrA=A;
+    listnode *S=(listnode*)malloc(sizeof(listnode));
+    listnode *L=(listnode*)malloc(sizeof(listnode));
+    listnode* itrS=S, *prevS=A;
+    listnode* itrL=L, *prevL=A;
+    int sflag=0, lflag=0;
+    
+    
     while(itrA!=NULL)
     {
-        if(itrA->val < B)
+        if(itrA->val<B)
         {
-            count++;
+            itrS->val=itrA->val;
+            prevS=itrS;
+            itrS->next=(listnode*)malloc(sizeof(listnode));
+            itrS=itrS->next;
+            //itrS->next=L;
+            sflag=1;
+        }
+        else
+        {
+            itrL->val=itrA->val;
+            prevL=itrL;
+            itrL->next=(listnode*)malloc(sizeof(listnode));
+            itrL=itrL->next;
+            //itrL->next=NULL;
+            lflag=1;
         }
         itrA=itrA->next;
     }
-    return count;
-}
-listnode* partition(listnode* A, int B) {
-    listnode *itrA=A;
-    listnode *itrS=A;
-    listnode *itrL=A;
-    int sflag=0, lflag=0, temp, end=0;
-    int count=countS(A,B);
     
-    while(itrS!=NULL && itrL!=NULL)
+    if(sflag==1 && lflag==1)
     {
-        while(itrL->val < B )
-        {
-            itrL=itrL->next;
-            if(itrL==NULL)
-            {
-                end=1;
-                break;
-            }
-            lflag++;
-        }
-        
-        while(itrS->val >= B || sflag<=lflag)
-        {
-            itrS=itrS->next;
-            if(itrS==NULL)
-            {
-                end=1;
-                break;
-            }
-            sflag++;
-        }
-        
-        if(end==1)
-        {
-            break;
-        }
-        
-        if(lflag < sflag)
-        {
-            temp= itrS->val;
-            itrS->val=itrL->val;
-            itrL->val=temp;
-            
-        }
-        itrS=itrS->next;
-        itrL=itrL->next;
+  
+        prevS->next=L;
+        prevL->next=NULL;
+        return S;
     }
-    
-    
-    
-    return A;
+    else
+    {
+        return A;
+    }
 }
 
