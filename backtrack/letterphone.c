@@ -6,7 +6,13 @@
 
 // a hashtable  
 const char hashTable[10][5]={"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+int num;
 
+void init()
+{
+    num=0;
+    return;
+}
 int strLength(char *A)
 {
     int count=0;
@@ -49,29 +55,28 @@ int numOfStrings(char *A)
 }
 
 
-void fillResult(char *A, int length, int index, char **result, int lengthOfOutput, int ratio)
+void fillResult(char *A, int length, int index, char **result, char* temp)
 {
-    int i,j=0,k;
+    int i;
     if(length==index)
     {
+        
+        for(i=0;i<length;i++)
+        {
+            result[num][i]=temp[i];
+            //printf("Printing [%d] [%d] = %d\n",num,i,temp[i]);
+
+        }
+        num++;
         return;
     }
     
     for(i=0;i<strLength(hashTable[(A[index]-'0')]);i++)
     {
-        int temp=strLength(hashTable[(A[index]-'0')]);
-        while(j<(lengthOfOutput/temp)*(i+1))
-        {
-            for(k=0;k<ratio;k++)
-            {
-                result[j+k*ratio][index] = hashTable[(A[index]-'0')][i];
-                
-            }
-            j++;
-        }
-        
-        
-        fillResult(A, length, index+1, result, (lengthOfOutput/temp), temp);
+        //int temp=strLength(hashTable[(A[index]-'0')]);
+        temp[index] = hashTable[(A[index]-'0')][i];
+        //printf("temp[%d] is %d \n",index,hashTable[(A[index]-'0')][i]);
+        fillResult(A, length, index+1, result, temp);
         
     }
 }
@@ -84,6 +89,7 @@ char** letterCombinations(char* A, int *len1) {
     int i,j;
     int length=strLength(A);
     int lengthOfOutput= numOfStrings(A);
+    init();
     
     *len1=lengthOfOutput;
     char **result=(char **)malloc(sizeof(char*)*(*len1));
@@ -92,6 +98,7 @@ char** letterCombinations(char* A, int *len1) {
         result[i]=(char*)malloc(sizeof(char)*(length+1));
     }
     
+    char* temp=(char*)malloc(sizeof(char)*(length));
     // end all the strings with dilimiter
     for(i=0;i<(*len1);i++)
     {
@@ -99,7 +106,8 @@ char** letterCombinations(char* A, int *len1) {
     }
     
     // recursive function to fill in all the length
-    fillResult(A,length,0,result,lengthOfOutput,1);
+    fillResult(A,length,0,result,temp);
     
     return result;
 }
+
