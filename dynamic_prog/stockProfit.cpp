@@ -1,0 +1,22 @@
+int Solution::maxProfit(const vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int S= A.size();
+    int profit, maxProfit=0;
+    int min=INT_MAX;
+    for(int i=0;i<S;i++)
+    {
+        if(A[i]<min)
+        {
+            min=A[i];
+        }
+        if(A[i]-min > maxProfit)
+        {
+            maxProfit=(A[i]-min);
+        }
+    }
+    return maxProfit;
+}
+
