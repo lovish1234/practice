@@ -14,29 +14,11 @@ int Solution::canJump(vector<int> &A) {
     // Do not read input, instead use the arguments to the function.
     // Do not print the output, instead return values as specified
     // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
-    int size= A.size();
-    if(A[0]==0 && size!=1)
-    {
-        return 0;
-    }
-    else if(A[0]==0 && size==1)
-    {
-        return 1;
-    }
-    init();
-    
-    X[0]=1;
-    for(int i=1;i<size;i++)
-    {
-        for(int j=i-1;j>=0;j--)
-        {
-            X[i]=((X[j]) && (A[j]>=(i-j)));
-            if(X[i]==1)
-            {
-                break;
-            }
-        }
-    }
-    
-    return X[size-1];
+   int next = A.size() - 1;  
+   for (int i=A.size()-2; i>=0; --i) {   
+     if (A[i] >= (next - i)) {   
+       next = i;   
+     }  
+   }   
+   return (next == 0);  
 }
