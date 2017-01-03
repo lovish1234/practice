@@ -43,7 +43,6 @@ int n,m;
 vector<int> A,B,P(0),LM;
 int possibleOrNot(vector<int> A, int i, int n, vector<int> B, int j, int m)
 {
-	//cout << i << n << j << m;
 	// check if global sum not equal
 	if(i==n && j==m)
 	{
@@ -79,8 +78,7 @@ int possibleOrNot(vector<int> A, int i, int n, vector<int> B, int j, int m)
 	{
 		return 0;
 	}
-
-//	cout << k << "\n";
+;
 	P.pb(k);
 	return (1 && possibleOrNot(A,k,n,B,j+1,m));
 }
@@ -105,13 +103,10 @@ void getLocalMaxima()
 		{
 			if(A[j] >= max)
 			{
-		//		cout << j << "\n";
-		//		cout << max << "\n";
 				if(j==l)
 				{
 					if(A[j]>A[j+1])
 					{
-//						cout << "h~1";
 						max=A[j];
 						maxi=j;
 					}
@@ -120,24 +115,19 @@ void getLocalMaxima()
 				{
 					if(A[j]>A[j-1])
 					{
-//						cout << "h~2";
 						maxi=j;
 						max=A[j];
 					}
 				}
 				else if(j!=l && j!=(h-1))
 				{
-//					cout << "h~3x" << A[j] << A[j-1] << A[j+1] << (A[j] > A[j-1]) <<  (A[j] >A[j+1]) << "\n";
-
-					if(((A[j] == A[j-1]) && (A[j] > A[j+1])) || (A[j] >  A[j-1]) && (A[j] == A[j+1])) 
+					if(( (A[j]>=A[j-1]) && (A[j] > A[j+1] )) || (A[j]>=A[j+1]) && (A[j] >  A[j-1])) 
 					{
-//						cout << "h~3" << A[j] << A[j-1] << A[j+1] << (A[j] > A[j-1]) <<  (A[j] >A[j+1]) << "\n";
 						maxi=j;
 						max=A[j];
 					}
 				}
 			}
-//			cout << max << " " << maxi << "\n";
 		}
 		LM.pb(maxi);
 	}
@@ -230,21 +220,6 @@ int main()
 	}
 
 	getLocalMaxima();
-//	debug3(P[0],P[1],LM[0]);
 	printOrder();
-/*
-	vector<int>:: iterator it;
-	cout << "\n";
-	for(it=P.begin();it!=P.end();++it)
-	{
-		cout << *it << " ";
-	}
-	cout << "\n";
-	for(it=LM.begin();it!=LM.end();++it)
-	{
-		cout << *it << " ";
-	}
-*/	
-
 	return 0;
 }
