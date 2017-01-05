@@ -39,11 +39,66 @@ bool comparator(pair< ll,ll > const& a, pair< ll,ll > const& b)
 	return a.S < b.S;
 }
 
+int n,m,temp=0,prep=0;
+vector<int> A,B;
+
+int checkAll(vector<int> A, int index)
+{
+	unordered_map<int,int> M;
+	fr(index+1,i)
+	{
+		if(M.find(A[i])==M.end() && A[i]!=0)
+		{
+			M[A[i]]=i;
+		}
+	}
+	//cout << "checkall" << "\n";
+	//debug2(M.size(),m);
+	if(M.size()==m)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int checkOrder(vector<int> A,int index)
+{
+	unordered_map<int,int> M;
+	map<int,int> M_X;
+	fr(index+1,i)
+	{
+		if(M.find(A[i])==M.end() && A[i]!=0)
+		{
+			M[A[i]]=i;
+			M_X[i]=A[i];
+		}
+	}
+
+	map<int,int>::iterator it;
+	//unordered_map<int,int>::reverse_iterator rit;
+	int count=0,given=0;
+	for(it=M_X.begin();it!=M_X.end();++it)
+	{
+		//debug2(it->second,it->first);
+		if((B[(it->second)-1]+count+given)>(it->first))
+		{
+			return 0;
+		}
+		given+=B[(it->second)-1];
+		count++;
+	}
+	return 1;
+
+}
+
+
+
 int main()
 {
-	int n,m,temp,prep=0;
 	cin >> n >> m;
-	vector<int> A;
 	f(i,n)
 	{
 		cin >> temp;
@@ -53,76 +108,49 @@ int main()
 	f(i,m)
 	{
 		cin >> temp;
+		B.pb(temp);
 		prep+=temp;
 	}
-	
-	//day alloted to prepration of and exam of which subject
-	map <int, int> H;
-	f(i,n)
-	{
-		if(H.find(A[i])==H.end() && A[i]!=0)
-		{
-			H[A[i]]=i;
-		}
-	}
-	map<int,int>::iterator it;
-	int all=INT_MIN;
-	for(it=H.begin();it!=H.end();++it)
-	{
-		if(it->second>all)
-		{
-			all=it->second;;
-		}
-	}
 
-	// No exam for given subject
-	f(i,m)
+	int l=0,r=n-1,mid,o,a,flag=0,min=n;
+	if(checkAll(A,r)==0 || (prep+m)>n)
 	{
-		if(H.find(i+1)==H.end())
-		{
-			cout << "-1" << "\n";
-			return 0;
-		}
-	}
-
-	// Not enough days for prepration 
-	int l=0,r=n-1,mid=l+(r-l)/2;
-	if((r+1-prep-m)<0 || r<all)
-	{
-		cout << -1 << "\n";
+		//debug3(prep,m,n);
+		cout << "-1" << "\n";
 		return 0;
 	}
-
 	while(l<=r)
 	{
-		mid= l+(r-l)/2;
-
-		// have sufficient for prepration and taking exams
-		if((mid+1-prep-m)==0 && mid>=all)
+		mid=l+(r-l)/2;
+		//debug3(l,r,mid);
+		o=checkOrder(A,mid);
+		a=checkAll(A,mid);
+		//debug2(o,a);	
+		if(o==1 && a==1 && A[mid]!=0 )
 		{
-			break;
+			flag=1;
+			r=mid-1;
+			if(min>mid)
+			{
+				min=mid;
+			}
 		}
-		// either not sufficient days or all exams have not taken place
-		else if(( mid<all) || ((mid+1-prep-m)<0))
-		{
-			l=mid+1;
-		}
-		// more than sufficient days for preprations of exams
-		else if((mid+1-prep-m)>0 || mid>=all)
+		else if(o==1 && a==1 && A[mid]==0)
 		{
 			r=mid-1;
 		}
-	}
-
-	
-	fab(i,mid,n)
-	{
-		if(A[i]!=0)
+		else if(o==0 || a==0)
 		{
-			cout << i+1 << "\n";
-			return 0;
+			l=mid+1;
 		}
 	}
-	cout << "-1" << "\n";
+	if(flag==1)
+	{
+		cout << (min+1) << "\n";
+	}
+	else
+	{
+		cout << "-1" << "\n";
+	}
 	return 0;
 }
