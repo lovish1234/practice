@@ -60,14 +60,14 @@ bool comparator(pair< int,vector<int> > const& a, pair< int,vector<int> > const&
 	return a.F < b.F;
 }
 
-const int N=2505;
+const int N=3000;
 int redFlag=0;
 int n,m;
 // adjecency list
 vector< int > P[N];
 
 // for DFS
-vector< int > visited(2505,0);
+vector< int > visited(N,0);
 
 // to store the component of map with '.'
 vector< pair < int, vector<  int > > > component;
@@ -195,8 +195,7 @@ int main()
 		}
 	}
 	sort(component.begin(),component.end(),comparator);		
-
-/*	
+/*
 	f(i,component.size())
 	{
 		cout << component[i].F << "\n";
@@ -206,8 +205,7 @@ int main()
 		}
 		cout << "\n";
 	}
-*/	
-
+	*/
 	int numOfLakes=component.size(),minFill=0;
 	f(i,numOfLakes-k)
 	{
