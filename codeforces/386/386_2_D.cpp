@@ -1,8 +1,19 @@
 #include<cstdio>
 #include<iostream>
 #include<cmath>
+#include<algorithm>
+
+#include<cstring>
 #include<string>
 #include<list>
+#include<queue>
+#include<unordered_map>
+#include<unordered_set>
+#include<map>
+#include<set>
+#include<vector>
+#include<bitset>
+
 
 using namespace std;
 
@@ -11,101 +22,92 @@ using namespace std;
 #define sd3(a,b,c) scanf("%d%d%d",&a,&b,&c)
 
 #define f(i,n) for(int i=0;i<n;i++)
-#define fl(i,a,b) for(int i=a;i<=b;i++)
+#define fab(i,a,b) for(int i=a;i<=b;i++)
+#define fr(n,i) for(int i=(n-1);i>=0;i--)
+#define fabr(i,b,a) for(int i=b;i>=a;i--)
+
+#define debug(a) cout<< a << "\n"
+#define debug2(a,b) cout << a << " " << b << "\n"
+#define debug3(a,b,c) cout << a << " " << b << " " << c << "\n"
 
 #define  mz(array)  memset(array,0,sizeof(array))
 
+#define mp make_pair
+#define F first
+#define S second
+#define pb push_back
+
+#define EPS 0.0000001
+
+
 #define ll long long int
+
+typedef pair<int , int> PI;
+typedef vector< int > VI;
+typedef vector < vector < int > > VVI;
+
+
+typedef pair<ll , ll> PL;
+typedef vector< int > VL;
+typedef vector < vector < ll > > VVL;
 
 int main()
 {
-	int n,k;
-	sd2(n,k);
-
-	int a,b,i=0,j=0,l=0,x,y;
-	sd2(a,b);
-    
-	char c,d;
-	if(a>=b)
+	ll n,k,a,b,minum,manum;
+	char mi,ma;
+	cin >> n >> k >> a >> b;
+	if(a>b)
 	{
-		x=a;y=b;
-		c='G';
-		d='B';
+		mi='B';ma='G';
+		minum=b;manum=a;
 	}
 	else
 	{
-		x=b;y=a;
-		c='B';
-		d='G';
+		mi='G';ma='B';
+		minum=a;manum=b;
 	}
 
-	string s;
-//	cout << a << " " << b << "\n";
-	while(i<n)
+	// if not possible to fill 
+	if(((minum+1)*k)<manum)
 	{
-		if(x==0)
-		{
-			break;
-		}
-		if(j==0)
-		{
-			l=0;
-		    while(l<k)
-		    {
-//				cout << x << " " << i << " " << "\n"; 
+		cout << "NO";
+		return 0;
+	}
 
-				if(x==0)
-				{
-					break;
-				}
-				s+=c;
-                x--;l++;i++;
-			}
-//			cout << s << "\n";
-			j=1;
-		}
-		else
+	int pockets[minum+1];
+	f(i,minum+1)
+	{
+		pockets[i]=0;
+	}
+
+	int manum_or=manum;
+	while(manum>0)
+	{
+		f(i,minum+1)
 		{
-			if(y==0)
-			{
+			if(manum==0)
+			{	
 				break;
 			}
-			s+=d;
-			j=0;
-//			cout << s << "\n";
-			i++;y--;
+			manum--;
+			pockets[i]++;
 		}
-	
 	}
 
-	if(s.length()==n)
+	f(i,minum)
 	{
-		cout << s;
+		
+		f(j,pockets[i])
+		{
+			cout << ma;
+		}
+		cout << mi;
 	}
-	else
+	
+	f(j,pockets[minum])
 	{
-		if(x==0 && y<k)
-		{
-			while(y>0)
-			{
-				s+=d;
-				y--;
-			}
-			cout << s;
-		}
-		else if(y==0 && x<k && s[s.length()-1]!=c)
-		{
-			while(x>0)
-			{
-				s+=c;
-				x--;
-			}
-			cout << s;
-		}
-		else
-		{
-			cout << "NO";
-		}
+		cout << ma;
 	}
+	
 	return 0;
 }
